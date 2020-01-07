@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from "./context";
 
 export default function TodoItem({ title, id, completed }) {
-  const { removeTodo, toggleTodo } = useContext(Context);
+  const { dispatch } = useContext(Context);
 
   const cls = ["todo"];
 
@@ -16,11 +16,24 @@ export default function TodoItem({ title, id, completed }) {
         <input
           type="checkbox"
           checked={completed}
-          onChange={() => toggleTodo(id)}
+          onChange={() =>
+            dispatch({
+              type: "toggle",
+              payload: id
+            })
+          }
         />
         <span>{title}</span>
 
-        <i onClick={() => removeTodo(id)} className="material-icons red-text">
+        <i
+          onClick={() =>
+            dispatch({
+              type: "remove",
+              payload: id
+            })
+          }
+          className="material-icons red-text"
+        >
           delete
         </i>
       </label>
