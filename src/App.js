@@ -4,6 +4,15 @@ import { Context } from "./context";
 import reducer from "./reducer";
 
 export default function App() {
+  useEffect(() => {
+    window.navigator.geolocation.getCurrentPosition(
+      position => setLatitude(position.coords.latitude),
+      error => console.log(error)
+    );
+  }, []);
+
+  const [latitude, setLatitude] = useState(null);
+
   const [state, dispatch] = useReducer(
     reducer,
     JSON.parse(localStorage.getItem("todos"))
@@ -29,7 +38,7 @@ export default function App() {
     <Context.Provider value={{ dispatch }}>
       <div className="container">
         <h1>Todo app</h1>
-
+        <h3>Latitude: {latitude}</h3>
         <div className="input-field">
           <input
             type="text"
